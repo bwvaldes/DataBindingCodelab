@@ -21,6 +21,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import com.example.android.databinding.basicsample.data.Popularity.NORMAL
 
+
 /**
  * A VM for [com.example.android.databinding.basicsample.ui.SolutionActivity].
  */
@@ -40,7 +41,7 @@ class SimpleViewModelSolution : ViewModel() {
             when {
                 it > 9 -> Popularity.STAR
                 it > 4 -> Popularity.POPULAR
-                else -> Popularity.NORMAL
+                else -> NORMAL
             }
         })
     }

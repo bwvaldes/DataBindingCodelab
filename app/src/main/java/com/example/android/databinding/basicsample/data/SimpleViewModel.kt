@@ -17,34 +17,40 @@
 package com.example.android.databinding.basicsample.data
 
 import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableField
+import android.databinding.ObservableInt
+import com.example.android.databinding.basicsample.data.Popularity.NORMAL
+
+/**
+ * Codelab Link: https://codelabs.developers.google.com/codelabs/android-databinding/index.html?index=..%2F..index#0
+ **/
 
 /**
  * A simple VM for [com.example.android.databinding.basicsample.ui.PlainOldActivity].
  */
+
 class SimpleViewModel : ViewModel() {
     val name = "Grace"
     val lastName = "Hopper"
-    var likes = 0
-        private set // This is to prevent external modification of the variable.
-
+    val likes = ObservableInt()
+    val popularity = ObservableField<Popularity>(NORMAL)
     /**
      * Increments the number of likes.
      */
     fun onLike() {
-        likes++
+        likes.set(likes.get() + 1)
+
+        popularity.set(likes.get().let {
+            when {
+                it > 9 -> Popularity.STAR
+                it > 9 -> Popularity.POPULAR
+                else -> NORMAL
+
+            }
+        })
     }
 
-    /**
-     * Returns popularity in buckets: [Popularity.NORMAL], [Popularity.POPULAR] or [Popularity.STAR]
-     */
-    val popularity: Popularity
-        get() {
-            return when {
-                likes > 9 -> Popularity.STAR
-                likes > 4 -> Popularity.POPULAR
-                else -> Popularity.NORMAL
-            }
-        }
+
 }
 
 enum class Popularity {
